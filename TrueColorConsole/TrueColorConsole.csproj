@@ -11,6 +11,9 @@
     <PackageTags>console virtual terminal 24-bit true color RGB .NET VT100</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIconUrl>https://github.com/aybe/TrueColorConsole/raw/master/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/aybe/TrueColorConsole</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/aybe/TrueColorConsole/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
