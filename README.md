@@ -1,7 +1,7 @@
 # TrueColorConsole
 24-bit color console for .NET !
 
-[![NuGet](https://img.shields.io/badge/nuget-v1.0.0-blue.svg)](https://www.nuget.org/packages/TrueColorConsole/)
+[![NuGet](https://img.shields.io/badge/nuget-v1.0.1-blue.svg)](https://www.nuget.org/packages/TrueColorConsole/)
 
 ## Synopsis
 
@@ -42,3 +42,13 @@ What you can do:
 ## Credits
 
 plasma code taken from [libcaca](http://caca.zoy.org/wiki/libcaca) 
+
+## Changes
+
+1.0.1
+
+- full docs
+- optimization and fixes
+- all formatting features
+  - but [Foreground|Background]Extended, these stay as helper methods since usage is simpler that way
+- support of non Win10 Anniversary Update systems
