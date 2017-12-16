@@ -5,6 +5,12 @@ namespace TrueColorConsole
 {
     public static partial class VTConsole
     {
+        /// <summary>
+        ///     Sets the active character mode.
+        /// </summary>
+        /// <param name="charSet">
+        ///     Character set to use.
+        /// </param>
         [PublicAPI]
         public static void SetCharacterMode(VTCharSet charSet)
         {
@@ -24,8 +30,12 @@ namespace TrueColorConsole
         /// <summary>
         ///     Sets the VT scrolling margins of the viewport.
         /// </summary>
-        /// <param name="top"></param>
-        /// <param name="bottom"></param>
+        /// <param name="top">
+        ///     Top line of the scroll region, one-based, inclusive.
+        /// </param>
+        /// <param name="bottom">
+        ///     Bottom line of the scroll region, one-based, inclusive.
+        /// </param>
         [PublicAPI]
         public static void SetScrollingRegion(int top, int bottom)
         {
@@ -41,7 +51,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Sets the console window’s title.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">
+        ///     Text for the console window title, 255 characters at most.
+        /// </param>
         [PublicAPI]
         public static void SetWindowTitle([CanBeNull] string text)
         {
@@ -57,7 +69,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Sets the console window’s title.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">
+        ///     Text for the console window title, 255 characters at most.
+        /// </param>
         [PublicAPI]
         public static void SetWindowTitleAndIcon([CanBeNull] string text)
         {

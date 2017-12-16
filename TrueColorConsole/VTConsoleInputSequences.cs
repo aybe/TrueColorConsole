@@ -5,6 +5,12 @@ namespace TrueColorConsole
 {
     public static partial class VTConsole
     {
+        /// <summary>
+        ///     Emits a key.
+        /// </summary>
+        /// <param name="cursorKey">
+        ///     Cursor key to emit.
+        /// </param>
         [PublicAPI]
         public static void Emit(VTCursorKey cursorKey)
         {
@@ -59,6 +65,12 @@ namespace TrueColorConsole
             }
         }
 
+        /// <summary>
+        ///     Emits a key.
+        /// </summary>
+        /// <param name="key">
+        ///     Key to emit.
+        /// </param>
         [PublicAPI]
         public static void Emit(VTKey key)
         {

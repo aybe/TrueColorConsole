@@ -8,7 +8,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Scroll text up by N lines. Also known as pan down, new lines fill in from the bottom of the screen.
         /// </summary>
-        /// <param name="lines"></param>
+        /// <param name="lines">
+        ///     Number of lines to scroll by.
+        /// </param>
         [PublicAPI]
         public static void ScrollUp(int lines = 1)
         {
@@ -21,7 +23,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Scroll down by N lines. Also known as pan up, new lines fill in from the top of the screen.
         /// </summary>
-        /// <param name="lines"></param>
+        /// <param name="lines">
+        ///     Number of lines to scroll by.
+        /// </param>
         [PublicAPI]
         public static void ScrollDown(int lines = 1)
         {

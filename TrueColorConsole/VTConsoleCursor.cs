@@ -8,7 +8,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor moves to Nth position horizontally in the current line.
         /// </summary>
-        /// <param name="column"></param>
+        /// <param name="column">
+        ///     Column to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorAbsoluteHorizontal(int column)
         {
@@ -21,7 +23,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor moves to the Nth position vertically in the current column.
         /// </summary>
-        /// <param name="row"></param>
+        /// <param name="row">
+        ///     Row to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorAbsoluteVertical(int row)
         {
@@ -52,7 +56,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor down to beginning of Nth line in the viewport.
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="line">
+        ///     Line to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorLineDown(int line = 1)
         {
@@ -65,7 +71,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor up to beginning of Nth line in the viewport.
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="line">
+        ///     Line to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorLineUp(int line = 1)
         {
@@ -78,7 +86,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor up by N rows.
         /// </summary>
-        /// <param name="rows"></param>
+        /// <param name="rows">
+        ///     Number of rows to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveUp(int rows = 1)
         {
@@ -91,7 +101,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor down by N rows.
         /// </summary>
-        /// <param name="rows"></param>
+        /// <param name="rows">
+        ///     Number of rows to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveDown(int rows = 1)
         {
@@ -104,7 +116,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor right by N columns.
         /// </summary>
-        /// <param name="columns"></param>
+        /// <param name="columns">
+        ///     Number of columns to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveRight(int columns = 1)
         {
@@ -117,7 +131,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor left by N columns.
         /// </summary>
-        /// <param name="columns"></param>
+        /// <param name="columns">
+        ///     Number of columns to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveLeft(int columns = 1)
         {
@@ -130,8 +146,12 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor move to coordinates within the viewport.
         /// </summary>
-        /// <param name="column"></param>
-        /// <param name="row"></param>
+        /// <param name="column">
+        ///     Column to move to, one-based.
+        /// </param>
+        /// <param name="row">
+        ///     Row to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorPosition(int column, int row)
         {
@@ -187,7 +207,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Sets cursor blinking.
         /// </summary>
-        /// <param name="enabled"></param>
+        /// <param name="enabled">
+        ///     Enable blinking.
+        /// </param>
         [PublicAPI]
         public static void CursorSetBlinking(bool enabled)
         {
@@ -197,7 +219,9 @@ namespace TrueColorConsole
         /// <summary>
         ///     Sets cursor visibility.
         /// </summary>
-        /// <param name="enabled"></param>
+        /// <param name="enabled">
+        ///     Enable visibility.
+        /// </param>
         [PublicAPI]
         public static void CursorSetVisibility(bool enabled)
         {
