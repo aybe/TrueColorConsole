@@ -16,6 +16,8 @@ And as a bonus, a high-throughput mode has been implemented for demanding apps (
 
 [Watch a video of the above plasma running at 50 FPS in the console :)](https://github.com/aybe/TrueColorConsole/raw/master/example3.webm)
 
+(if your browser fails to play it, download it and use something like VLC)
+
 ## Notes
 
 1. check the [official docs](https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences) for complete reference
