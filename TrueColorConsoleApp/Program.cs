@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Text;
 using System.Threading;
 using TrueColorConsole;
 
@@ -14,8 +15,13 @@ namespace TrueColorConsoleApp
 
             VTConsole.Enable();
 
-            goto start;
+            Example3();
 
+            Console.ReadKey();
+        }
+
+        private static int Example1()
+        {
             var width = 80;
             var height = 25;
             Console.SetWindowSize(width, height);
@@ -33,10 +39,12 @@ namespace TrueColorConsoleApp
                 var value = $"{(y * cx + x) % 10}";
                 VTConsole.Write(value, Color.Black, Color.FromArgb(r, g, b));
             }
+            return cy;
+        }
 
-            Sleep();
-
-            for (var i = 0; i < cy / 4; i++)
+        private static void Example2()
+        {
+            for (var i = 0; i < Console.WindowHeight / 4; i++)
             {
                 Sleep(50);
                 VTConsole.ScrollUp();
@@ -62,28 +70,48 @@ namespace TrueColorConsoleApp
             VTConsole.WriteLine();
             VTConsole.SetFormat(VTFormat.Underline, VTFormat.Negative);
             VTConsole.WriteLine("Press a key to exit !!!", Color.White, Color.Red);
-
-            start:
-            WriteLineSlow("abcd");
-            VTConsole.CursorAbsoluteHorizontal(1);
-
-            VTConsole.CharacterDelete();
-            Console.ReadKey(true);
         }
 
-        static void WriteLineSlow(string text)
+        private static void Example3()
         {
-            WriteSlow(text + Environment.NewLine);
-        }
-        private static void WriteSlow(string text)
-        {
-            foreach (var c in text)
+            var plasma = new Plasma(256, 256);
+            var width = 80;
+            var height = 40;
+
+            Console.SetWindowSize(width, height);
+            Console.SetBufferSize(width, height);
+            Console.SetWindowSize(width, height); // removes bars
+            Console.Title = "Plasma !";
+            Console.CursorVisible = false;
+
+            var builder = new StringBuilder(width * height * 22);
+
+            for (var frame = 0; ; frame++)
             {
-                VTConsole.Write(c.ToString());
-                Sleep(100);
+                plasma.PlasmaFrame(frame);
+                builder.Clear();
+                
+                Thread.Sleep((int)(1.0 / 20 * 1000));
+                
+                for (var i = 0; i < width * height; i++)
+                {
+                    var x1 = i % width;
+                    var y1 = i / width;
+                    var i1 = y1 * plasma.SizeX + x1;
+                    var b = plasma.Screen[i1];
+
+                    var cr = plasma.ColR[b] >> 4;
+                    var cg = plasma.ColG[b] >> 4;
+                    var cb = plasma.ColB[b] >> 4;
+                    var str = VTConsole.GetColorBackgroundString(cr, cg, cb);
+                    builder.Append(str);
+                    builder.Append(' ');
+                }
+                var bytes = Encoding.ASCII.GetBytes(builder.ToString());
+                VTConsole.WriteFast(bytes);
             }
         }
-
+        
         private static void Sleep(int millisecondsTimeout = 2000)
         {
             Thread.Sleep(millisecondsTimeout);
