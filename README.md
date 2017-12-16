@@ -27,6 +27,7 @@ And as a bonus, a high-throughput mode has been implemented for demanding apps (
 3. it is *mostly* documented, refer to #1 as necessary
 4. you won't explicitly have to deal with VT sequences, but it does not entirely wrap good ol' `Console`
 5. basic functionality has been tested but complex VT scenarios haven't
+6. see *TrueColorConsoleApp* project for examples
 
 ## Contribute
 
