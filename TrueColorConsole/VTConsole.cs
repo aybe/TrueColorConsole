@@ -189,6 +189,11 @@ namespace TrueColorConsole
 
             IsEnabled = !(DisableInput() && DisableOutput());
 
+            _inHandle = IntPtr.Zero;
+            _outHandle = IntPtr.Zero;
+            _cursorKeysMode = VTCursorKeysMode.Normal;
+            _keypadMode = VTKeypadMode.Numeric;
+
             return !IsEnabled;
         }
 

@@ -5,7 +5,7 @@ namespace TrueColorConsole
 {
     public static partial class VTConsole
     {
-        private static VTCursorKeysMode _cursorKeysMode;
+        private static VTCursorKeysMode _cursorKeysMode = VTCursorKeysMode.Normal;
         private static VTKeypadMode _keypadMode = VTKeypadMode.Numeric;
 
         /// <summary>
