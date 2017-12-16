@@ -1,6 +1,8 @@
 # TrueColorConsole
 24-bit color console for .NET !
 
+[![NuGet](https://img.shields.io/badge/nuget-v1.0.0-blue.svg)](https://www.nuget.org/packages/TrueColorConsole/)
+
 ## Synopsis
 
 The feature was announced in [24-bit Color in the Windows Console!](https://blogs.msdn.microsoft.com/commandline/2016/09/22/24-bit-color-in-the-windows-console/), now you too can enjoy it in your .NET console app.
