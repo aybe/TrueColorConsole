@@ -99,8 +99,13 @@ namespace TrueColorConsole
         public static bool IsEnabled { get; private set; }
 
         /// <summary>
-        ///     Gets if virtual terminal features are supported.
+        ///     Gets if virtual terminal features are supported (see Remarks).
         /// </summary>
+        /// <remarks>
+        ///     This property will return <c>true</c> if all features are supported, which requires Windows 10 Anniversary
+        ///     Update. If it fails, you can try to enable it manually with <see cref="Enable" /> and passing <c>false</c>, and see
+        ///     whether your system supports virtual terminal sequences without features specific to Windows 10 Anniversary Update.
+        /// </remarks>
         [PublicAPI]
         public static bool IsSupported { get; } = Enable() && Disable();
 
@@ -119,11 +124,15 @@ namespace TrueColorConsole
         /// <summary>
         ///     Enables virtual terminal features.
         /// </summary>
+        /// <param name="disableNewLineAutoReturn">
+        ///     Enable emulating the cursor positioning and scrolling behavior of other terminal emulators in relation to
+        ///     characters written to the final column in any row. Requires Windows 10 Anniversary Update.
+        /// </param>
         /// <returns>
         ///     <c>true</c> on success.
         /// </returns>
         [PublicAPI]
-        public static bool Enable()
+        public static bool Enable(bool disableNewLineAutoReturn = true)
         {
             if (IsEnabled)
                 return true;
@@ -149,8 +158,10 @@ namespace TrueColorConsole
                 if (!GetConsoleMode(StdOut, out _outLast))
                     return false;
 
-                var mode = _outLast | ConsoleModeOutput.EnableVirtualTerminalProcessing |
-                           ConsoleModeOutput.DisableNewlineAutoReturn;
+                var mode = _outLast | ConsoleModeOutput.EnableVirtualTerminalProcessing;
+
+                if (disableNewLineAutoReturn)
+                    mode |= ConsoleModeOutput.DisableNewlineAutoReturn;
 
                 if (SetConsoleMode(StdOut, (uint) mode))
                     return true;
