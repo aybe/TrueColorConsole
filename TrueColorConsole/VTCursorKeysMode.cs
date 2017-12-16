@@ -3,9 +3,9 @@
 namespace TrueColorConsole
 {
     [PublicAPI]
-    public enum VTIntensity
+    public enum VTCursorKeysMode
     {
-        Normal,
-        Bright
+        Application,
+        Normal
     }
 }

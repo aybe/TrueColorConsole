@@ -3,9 +3,9 @@
 namespace TrueColorConsole
 {
     [PublicAPI]
-    public enum VTLayer
+    public enum VTKeypadMode
     {
-        Foreground,
-        Background
+        Application,
+        Numeric
     }
 }

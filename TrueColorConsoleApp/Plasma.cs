@@ -2,7 +2,7 @@
 
 namespace ConsoleApp1
 {
-    internal class Plasma
+    public class Plasma
     {
         public readonly int[] ColB = new int[256];
         public readonly int[] ColG = new int[256];
@@ -38,13 +38,15 @@ namespace ConsoleApp1
             for (var y = 0; y < TableY; y++)
             for (var x = 0; x < TableX; x++)
             {
-                var tmp = ((x - TableX / 2) * (x - TableX / 2) + (y - TableX / 2) * (y - TableX / 2))
-                          * (Math.PI / (TableX * TableX + TableY * TableY));
+                var tmp = ((x - TableX / 2) * (x - TableX / 2)
+                           +
+                           (y - TableX / 2) * (y - TableX / 2))
+                          *
+                          (Math.PI / (TableX * TableX + TableY * TableY));
 
                 Table[x + y * TableX] = (byte) ((1.0 + Math.Sin(12.0 * Math.Sqrt(tmp))) * 256 / 6);
             }
         }
-
 
         public void PlasmaFrame(int frame)
         {

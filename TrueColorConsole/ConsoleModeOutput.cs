@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TrueColorConsole
 {
     [Flags]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     internal enum ConsoleModeOutput : uint
     {
         EnableProcessedOutput = 0x1,

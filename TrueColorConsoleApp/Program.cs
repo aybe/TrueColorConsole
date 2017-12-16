@@ -9,9 +9,18 @@ namespace TrueColorConsoleApp
     {
         private static void Main(string[] args)
         {
-            Class1.main();
             if (!VTConsole.IsSupported)
                 throw new NotSupportedException();
+
+            VTConsole.Enable();
+
+            goto start;
+
+            var width = 80;
+            var height = 25;
+            Console.SetWindowSize(width, height);
+            Console.SetBufferSize(width, height);
+            Console.SetWindowSize(width, height);
 
             var cx = Console.WindowWidth;
             var cy = Console.WindowHeight;
@@ -21,10 +30,11 @@ namespace TrueColorConsoleApp
                 var r = (int) ((float) x / cx * 255);
                 var g = (int) ((float) y / cy * 255);
                 var b = (int) (1.0f * 255);
-                VTConsole.Write($"{(y * cx + x) % 10}", Color.Black, Color.FromArgb(255, r, g, b));
+                var value = $"{(y * cx + x) % 10}";
+                VTConsole.Write(value, Color.Black, Color.FromArgb(r, g, b));
             }
 
-            Sleep(1500);
+            Sleep();
 
             for (var i = 0; i < cy / 4; i++)
             {
@@ -32,17 +42,15 @@ namespace TrueColorConsoleApp
                 VTConsole.ScrollUp();
             }
 
-            VTConsole.Format(Color.White);
-
-            VTConsole.WriteLine("Disabling cursor blinking", background: Color.Red);
+            VTConsole.WriteLine("Disabling cursor blinking", Color.White, Color.Red);
             VTConsole.CursorSetBlinking(false);
             Sleep();
 
-            VTConsole.WriteLine("Enabling cursor blinking", background: Color.Green);
+            VTConsole.WriteLine("Enabling cursor blinking", Color.White, Color.Green);
             VTConsole.CursorSetBlinking(true);
             Sleep();
 
-            VTConsole.Format(background: Color.White);
+            VTConsole.SetColorBackground(Color.White);
             VTConsole.WriteLine("Hiding cursor", Color.DeepPink);
             VTConsole.CursorSetVisibility(false);
             Sleep();
@@ -52,8 +60,28 @@ namespace TrueColorConsoleApp
             Sleep();
 
             VTConsole.WriteLine();
-            VTConsole.WriteLine("Press a key to exit !!!", Color.White, Color.Red, VTFormat.UnderlineOn);
-            VTConsole.ReadKey();
+            VTConsole.SetFormat(VTFormat.Underline, VTFormat.Negative);
+            VTConsole.WriteLine("Press a key to exit !!!", Color.White, Color.Red);
+
+            start:
+            WriteLineSlow("abcd");
+            VTConsole.CursorAbsoluteHorizontal(1);
+
+            VTConsole.CharacterDelete();
+            Console.ReadKey(true);
+        }
+
+        static void WriteLineSlow(string text)
+        {
+            WriteSlow(text + Environment.NewLine);
+        }
+        private static void WriteSlow(string text)
+        {
+            foreach (var c in text)
+            {
+                VTConsole.Write(c.ToString());
+                Sleep(100);
+            }
         }
 
         private static void Sleep(int millisecondsTimeout = 2000)

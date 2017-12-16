@@ -5,42 +5,14 @@ namespace TrueColorConsole
     [PublicAPI]
     public enum VTFormat
     {
-        /// <summary>
-        ///     Returns all attributes to the default state.
-        /// </summary>
         Default = 0,
 
-        /// <summary>
-        ///     Returns background color to the default state.
-        /// </summary>
-        DefaultBackground = 49,
+        //BoldBright = 1,
 
-        /// <summary>
-        ///     Returns foreground color to the default state.
-        /// </summary>
-        DefaultForeground = 39,
-
-        /// <summary>
-        ///     Enables foreground and background colors swapping.
-        /// </summary>
-        ColorNegative = 7,
-
-        /// <summary>
-        ///     Disables foreground and background colors swapping
-        /// </summary>
-        ColorPositive = 27,
-
-        /// <summary>
-        ///     Enables underline.
-        /// </summary>
-        UnderlineOn = 4,
-
-        /// <summary>
-        ///     Disables underline.
-        /// </summary>
-        UnderlineOff = 24
-
-        // BoldBright = 1,
+        Underline = 4,
+        NoUnderline = 24,
+        Negative = 7,
+        Positive = 27
 
         //ForegroundBlack = 30,
         //ForegroundRed = 31,
@@ -51,6 +23,7 @@ namespace TrueColorConsole
         //ForegroundCyan = 36,
         //ForegroundWhite = 37,
         //ForegroundExtended = 38,
+        //ForegroundDefault = 39,
 
         //BackgroundBlack = 40,
         //BackgroundRed = 41,
@@ -61,6 +34,7 @@ namespace TrueColorConsole
         //BackgroundCyan = 46,
         //BackgroundWhite = 47,
         //BackgroundExtended = 48,
+        //BackgroundDefault = 49,
 
         //BrightForegroundBlack = 90,
         //BrightForegroundRed = 91,
