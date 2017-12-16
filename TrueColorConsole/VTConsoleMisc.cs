@@ -5,16 +5,22 @@ namespace TrueColorConsole
 {
     public static partial class VTConsole
     {
+        /// <summary>
+        ///     Sets the active character mode.
+        /// </summary>
+        /// <param name="charSet">
+        ///     Character set to use.
+        /// </param>
         [PublicAPI]
         public static void SetCharacterMode(VTCharSet charSet)
         {
             switch (charSet)
             {
                 case VTCharSet.Ascii:
-                    Write($"{ESC}(B");
+                    WriteConcat(ESC, "(B");
                     break;
                 case VTCharSet.DecLineDrawing:
-                    Write($"{ESC}(0");
+                    WriteConcat(ESC, "(0");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(charSet), charSet, null);
@@ -24,8 +30,12 @@ namespace TrueColorConsole
         /// <summary>
         ///     Sets the VT scrolling margins of the viewport.
         /// </summary>
-        /// <param name="top"></param>
-        /// <param name="bottom"></param>
+        /// <param name="top">
+        ///     Top line of the scroll region, one-based, inclusive.
+        /// </param>
+        /// <param name="bottom">
+        ///     Bottom line of the scroll region, one-based, inclusive.
+        /// </param>
         [PublicAPI]
         public static void SetScrollingRegion(int top, int bottom)
         {
@@ -35,13 +45,15 @@ namespace TrueColorConsole
             if (bottom < 1 || bottom > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(bottom));
 
-            Write($"{ESC}[{top};{bottom}r");
+            WriteConcat(ESC, "[", top, ";", bottom, "r");
         }
 
         /// <summary>
         ///     Sets the console window’s title.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">
+        ///     Text for the console window title, 255 characters at most.
+        /// </param>
         [PublicAPI]
         public static void SetWindowTitle([CanBeNull] string text)
         {
@@ -51,13 +63,15 @@ namespace TrueColorConsole
             if (text.Length > 255)
                 throw new ArgumentOutOfRangeException(nameof(text));
 
-            Write($"{ESC}]2;{text}{BEL}");
+            WriteConcat(ESC.Length, "]2;", text, BEL);
         }
 
         /// <summary>
         ///     Sets the console window’s title.
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="text">
+        ///     Text for the console window title, 255 characters at most.
+        /// </param>
         [PublicAPI]
         public static void SetWindowTitleAndIcon([CanBeNull] string text)
         {
@@ -67,7 +81,7 @@ namespace TrueColorConsole
             if (text.Length > 255)
                 throw new ArgumentOutOfRangeException(nameof(text));
 
-            Write($"{ESC}]0;{text}{BEL}");
+            WriteConcat(ESC.Length, "]0;", text, BEL);
         }
 
         /// <summary>
@@ -76,7 +90,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SwitchScreenBufferAlternate()
         {
-            Write($"{ESC}[?1049h");
+            WriteConcat(ESC, "[?1049h");
         }
 
         /// <summary>
@@ -85,7 +99,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SwitchScreenBufferMain()
         {
-            Write($"{ESC}[?1049l");
+            WriteConcat(ESC, "[?1049l");
         }
 
         /// <summary>
@@ -94,7 +108,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SetConsoleWidth80()
         {
-            Write($"{ESC}[?3l");
+            WriteConcat(ESC, "[?3l");
         }
 
         /// <summary>
@@ -103,7 +117,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SetConsoleWidth132()
         {
-            Write($"{ESC}[?3h");
+            WriteConcat(ESC, "[?3h");
         }
 
         /// <summary>
@@ -112,7 +126,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SoftReset()
         {
-            Write($"{ESC}[!p");
+            WriteConcat(ESC, "[!p");
         }
     }
 }

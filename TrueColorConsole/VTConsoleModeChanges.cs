@@ -5,7 +5,7 @@ namespace TrueColorConsole
 {
     public static partial class VTConsole
     {
-        private static VTCursorKeysMode _cursorKeysMode;
+        private static VTCursorKeysMode _cursorKeysMode = VTCursorKeysMode.Normal;
         private static VTKeypadMode _keypadMode = VTKeypadMode.Numeric;
 
         /// <summary>
@@ -20,10 +20,10 @@ namespace TrueColorConsole
                 switch (value)
                 {
                     case VTCursorKeysMode.Normal:
-                        Write($"{ESC}[?1l");
+                        WriteConcat(ESC, "[?1l");
                         break;
                     case VTCursorKeysMode.Application:
-                        Write($"{ESC}[?1h");
+                        WriteConcat(ESC, "[?1h");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(value), value, null);
@@ -44,10 +44,10 @@ namespace TrueColorConsole
                 switch (value)
                 {
                     case VTKeypadMode.Numeric:
-                        Write($"{ESC}>");
+                        WriteConcat(ESC, ">");
                         break;
                     case VTKeypadMode.Application:
-                        Write($"{ESC}=");
+                        WriteConcat(ESC, "=");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(value), value, null);

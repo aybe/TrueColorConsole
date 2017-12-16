@@ -9,87 +9,101 @@ namespace TrueColorConsole
         ///     Insert N spaces at the current cursor position, shifting all existing text to the right. Text exiting the screen to
         ///     the right is removed.
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="count">
+        ///     Number of characters to insert.
+        /// </param>
         [PublicAPI]
         public static void CharacterInsert(int count = 1)
         {
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}@");
+            WriteConcat(ESC, "[", count, "@");
         }
 
         /// <summary>
         ///     Delete N characters at the current cursor position, shifting in space characters from the right edge of the screen.
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="count">
+        ///     Number of characters to delete.
+        /// </param>
         [PublicAPI]
         public static void CharacterDelete(int count = 1)
         {
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}P");
+            WriteConcat(ESC, "[", count, "P");
         }
 
         /// <summary>
         ///     Erase N characters from the current cursor position by overwriting them with a space character.
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="count">
+        ///     Number of characters to erase.
+        /// </param>
         [PublicAPI]
         public static void CharacterErase(int count = 1)
         {
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}X");
+            WriteConcat(ESC, "[", count, "X");
         }
 
         /// <summary>
         ///     Inserts N lines into the buffer at the cursor position. The line the cursor is on, and lines below it, will be
         ///     shifted downwards.
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="count">
+        ///     Number of lines to insert.
+        /// </param>
         [PublicAPI]
         public static void LineInsert(int count = 1)
         {
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}L");
+            WriteConcat(ESC, "[", count, "L");
         }
 
         /// <summary>
         ///     Deletes N lines from the buffer, starting with the row the cursor is on.
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="count">
+        ///     Number of lines to delete.
+        /// </param>
         [PublicAPI]
         public static void LineDelete(int count = 1)
         {
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}M");
+            WriteConcat(ESC, "[", count, "M");
         }
 
         /// <summary>
         ///     Replace all text in the current viewport/screen with space characters.
         /// </summary>
-        /// <param name="eraseMode"></param>
+        /// <param name="eraseMode">
+        ///     Erase mode for the replacement.
+        /// </param>
         [PublicAPI]
         public static void EraseInDisplay(VTEraseMode eraseMode = VTEraseMode.FromCursorToEnd)
         {
-            Write($"{ESC}[{(int) eraseMode}J");
+            WriteConcat(ESC, "[", (int) eraseMode, "J");
         }
 
         /// <summary>
         ///     Replace all text on the line with the cursor with space characters.
         /// </summary>
-        /// <param name="eraseMode"></param>
+        /// <param name="eraseMode">
+        ///     Erase mode for the replacement.
+        /// </param>
         [PublicAPI]
         public static void EraseInLine(VTEraseMode eraseMode = VTEraseMode.FromCursorToEnd)
         {
-            Write($"{ESC}[{(int) eraseMode}K");
+            WriteConcat(ESC, "[", (int) eraseMode, "K");
         }
     }
 }

@@ -11,35 +11,39 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void TabHorizontalSet()
         {
-            Write($"{ESC}H");
+            WriteConcat(ESC, "H");
         }
 
         /// <summary>
         ///     Advance the cursor to the next column (in the same row) with a tab stop. If there are no more tab stops, move to
         ///     the last column in the row. If the cursor is in the last column, move to the first column of the next row.
         /// </summary>
-        /// <param name="columns"></param>
+        /// <param name="columns">
+        ///     Number of columns to move by, one-based.
+        /// </param>
         [PublicAPI]
         public static void TabCursorForward(int columns)
         {
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}l");
+            WriteConcat(ESC, "[", columns, "l");
         }
 
         /// <summary>
         ///     Move the cursor to the previous column (in the same row) with a tab stop. If there are no more tab stops, moves the
         ///     cursor to the first column. If the cursor is in the first column, doesn’t move the cursor.
         /// </summary>
-        /// <param name="columns"></param>
+        /// <param name="columns">
+        ///     Number of columns to move by, one-based.
+        /// </param>
         [PublicAPI]
         public static void TabCursorBackward(int columns)
         {
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}Z");
+            WriteConcat(ESC, "[", columns, "Z");
         }
 
         /// <summary>
@@ -48,7 +52,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void TabClear()
         {
-            Write($"{ESC}[0g");
+            WriteConcat(ESC, "[0g");
         }
 
         /// <summary>
@@ -57,7 +61,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void TabClearAll()
         {
-            Write($"{ESC}[3g");
+            WriteConcat(ESC, "[3g");
         }
     }
 }

@@ -8,27 +8,31 @@ namespace TrueColorConsole
         /// <summary>
         ///     Cursor moves to Nth position horizontally in the current line.
         /// </summary>
-        /// <param name="column"></param>
+        /// <param name="column">
+        ///     Column to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorAbsoluteHorizontal(int column)
         {
             if (column < 1 || column > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(column));
 
-            Write($"{ESC}[{column}G");
+            WriteConcat(ESC, "[", column, "G");
         }
 
         /// <summary>
         ///     Cursor moves to the Nth position vertically in the current column.
         /// </summary>
-        /// <param name="row"></param>
+        /// <param name="row">
+        ///     Row to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorAbsoluteVertical(int row)
         {
             if (row < 1 || row > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(row));
 
-            Write($"{ESC}[{row}d");
+            WriteConcat(ESC, "[", row, "d");
         }
 
         /// <summary>
@@ -37,7 +41,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorAnsiRestore()
         {
-            Write($"{ESC}[u");
+            WriteConcat(ESC, "[u");
         }
 
         /// <summary>
@@ -46,92 +50,108 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorAnsiSave()
         {
-            Write($"{ESC}[s");
+            WriteConcat(ESC, "[s");
         }
 
         /// <summary>
         ///     Cursor down to beginning of Nth line in the viewport.
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="line">
+        ///     Line to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorLineDown(int line = 1)
         {
             if (line < 1 || line > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(line));
 
-            Write($"{ESC}[{line}E");
+            WriteConcat(ESC, "[", line, "E");
         }
 
         /// <summary>
         ///     Cursor up to beginning of Nth line in the viewport.
         /// </summary>
-        /// <param name="line"></param>
+        /// <param name="line">
+        ///     Line to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorLineUp(int line = 1)
         {
             if (line < 1 || line > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(line));
 
-            Write($"{ESC}[{line}F");
+            WriteConcat(ESC, "[", line, "F");
         }
 
         /// <summary>
         ///     Cursor up by N rows.
         /// </summary>
-        /// <param name="rows"></param>
+        /// <param name="rows">
+        ///     Number of rows to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveUp(int rows = 1)
         {
             if (rows < 1 || rows > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(rows));
 
-            Write($"{ESC}[{rows}A");
+            WriteConcat(ESC, "[", rows, "A");
         }
 
         /// <summary>
         ///     Cursor down by N rows.
         /// </summary>
-        /// <param name="rows"></param>
+        /// <param name="rows">
+        ///     Number of rows to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveDown(int rows = 1)
         {
             if (rows < 1 || rows > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(rows));
 
-            Write($"{ESC}[{rows}B");
+            WriteConcat(ESC, "[", rows, "B");
         }
 
         /// <summary>
         ///     Cursor right by N columns.
         /// </summary>
-        /// <param name="columns"></param>
+        /// <param name="columns">
+        ///     Number of columns to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveRight(int columns = 1)
         {
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}C");
+            WriteConcat(ESC, "[", columns, "C");
         }
 
         /// <summary>
         ///     Cursor left by N columns.
         /// </summary>
-        /// <param name="columns"></param>
+        /// <param name="columns">
+        ///     Number of columns to move by.
+        /// </param>
         [PublicAPI]
         public static void CursorMoveLeft(int columns = 1)
         {
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}D");
+            WriteConcat(ESC, "[", columns, "D");
         }
 
         /// <summary>
         ///     Cursor move to coordinates within the viewport.
         /// </summary>
-        /// <param name="column"></param>
-        /// <param name="row"></param>
+        /// <param name="column">
+        ///     Column to move to, one-based.
+        /// </param>
+        /// <param name="row">
+        ///     Row to move to, one-based.
+        /// </param>
         [PublicAPI]
         public static void CursorPosition(int column, int row)
         {
@@ -141,7 +161,7 @@ namespace TrueColorConsole
             if (row < 1 || row > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(row));
 
-            Write($"{ESC}[{column};{row}H");
+            WriteConcat(ESC, "[", column, ";", row, "H");
         }
 
         /// <summary>
@@ -154,7 +174,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorPositionRestore()
         {
-            Write($"{ESC}8");
+            WriteConcat(ESC, 8);
         }
 
         /// <summary>
@@ -167,7 +187,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorPositionSave()
         {
-            Write($"{ESC}7");
+            WriteConcat(ESC, 7);
         }
 
         /// <summary>
@@ -181,27 +201,31 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorReverseIndex()
         {
-            Write($"{ESC}M");
+            WriteConcat(ESC, "M");
         }
 
         /// <summary>
         ///     Sets cursor blinking.
         /// </summary>
-        /// <param name="enabled"></param>
+        /// <param name="enabled">
+        ///     Enable blinking.
+        /// </param>
         [PublicAPI]
         public static void CursorSetBlinking(bool enabled)
         {
-            Write($"{ESC}[?12{(enabled ? "h" : "l")}");
+            WriteConcat(ESC, "[?12", enabled ? "h" : "l");
         }
 
         /// <summary>
         ///     Sets cursor visibility.
         /// </summary>
-        /// <param name="enabled"></param>
+        /// <param name="enabled">
+        ///     Enable visibility.
+        /// </param>
         [PublicAPI]
         public static void CursorSetVisibility(bool enabled)
         {
-            Write($"{ESC}[?25{(enabled ? "h" : "l")}");
+            WriteConcat(ESC, "[?25", enabled ? "h" : "l");
         }
     }
 }
