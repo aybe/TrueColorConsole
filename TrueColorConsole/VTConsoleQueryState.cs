@@ -11,7 +11,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void QueryCursorPosition()
         {
-            Write($"{ESC}[6n");
+            WriteConcat(ESC, "[6n");
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void QueryDeviceAttributes()
         {
-            Write($"{ESC}[0c");
+            WriteConcat(ESC, "[0c");
         }
     }
 }

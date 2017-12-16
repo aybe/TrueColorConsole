@@ -280,7 +280,7 @@ namespace TrueColorConsole
         public static void Write(string value, Color foreground)
         {
             SetColorForeground(foreground);
-            Write(value);
+            Console.Write(value);
         }
 
         [PublicAPI]
@@ -288,7 +288,13 @@ namespace TrueColorConsole
         {
             SetColorForeground(foreground);
             SetColorBackground(background);
-            Write(value);
+            Console.Write(value);
+        }
+
+        [PublicAPI]
+        public static void WriteConcat(params object[] objects)
+        {
+            Console.Write(string.Concat(objects));
         }
 
         #endregion

@@ -31,34 +31,34 @@ namespace TrueColorConsole
             switch (cursorKey)
             {
                 case VTCursorKey.UpArrow:
-                    Write($"{ESC}{s}A");
+                    WriteConcat(ESC, s, "A");
                     break;
                 case VTCursorKey.DownArrow:
-                    Write($"{ESC}{s}B");
+                    WriteConcat(ESC, s, "B");
                     break;
                 case VTCursorKey.RightArrow:
-                    Write($"{ESC}{s}C");
+                    WriteConcat(ESC, s, "C");
                     break;
                 case VTCursorKey.LeftArrow:
-                    Write($"{ESC}{s}D");
+                    WriteConcat(ESC, s, "D");
                     break;
                 case VTCursorKey.Home:
-                    Write($"{ESC}{s}H");
+                    WriteConcat(ESC, s, "H");
                     break;
                 case VTCursorKey.End:
-                    Write($"{ESC}{s}F");
+                    WriteConcat(ESC, s, "F");
                     break;
                 case VTCursorKey.CtrlUpArrow:
-                    Write($"{ESC}[1;5A");
+                    WriteConcat(ESC, "[1;5A");
                     break;
                 case VTCursorKey.CtrlDownArrow:
-                    Write($"{ESC}[1;5B");
+                    WriteConcat(ESC, "[1;5B");
                     break;
                 case VTCursorKey.CtrlRightArrow:
-                    Write($"{ESC}[1;5C");
+                    WriteConcat(ESC, "[1;5C");
                     break;
                 case VTCursorKey.CtrlLeftArrow:
-                    Write($"{ESC}[1;5D");
+                    WriteConcat(ESC, "[1;5D");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(cursorKey), cursorKey, null);
@@ -77,61 +77,61 @@ namespace TrueColorConsole
             switch (key)
             {
                 case VTKey.Backspace:
-                    Write($"{DEL}");
+                    WriteConcat(DEL);
                     break;
                 case VTKey.Pause:
-                    Write($"{SUB}");
+                    WriteConcat(SUB);
                     break;
                 case VTKey.Escape:
-                    Write($"{ESC}");
+                    WriteConcat(ESC);
                     break;
                 case VTKey.Insert:
-                    Write($"{ESC}[2~");
+                    WriteConcat(ESC, "[2~");
                     break;
                 case VTKey.Delete:
-                    Write($"{ESC}[3~");
+                    WriteConcat(ESC, "[3~");
                     break;
                 case VTKey.PageUp:
-                    Write($"{ESC}[5~");
+                    WriteConcat(ESC, "[5~");
                     break;
                 case VTKey.PageDown:
-                    Write($"{ESC}[6~");
+                    WriteConcat(ESC, "[6~");
                     break;
                 case VTKey.F1:
-                    Write($"{ESC}OP");
+                    WriteConcat(ESC, "OP");
                     break;
                 case VTKey.F2:
-                    Write($"{ESC}OQ");
+                    WriteConcat(ESC, "OQ");
                     break;
                 case VTKey.F3:
-                    Write($"{ESC}OR");
+                    WriteConcat(ESC, "OR");
                     break;
                 case VTKey.F4:
-                    Write($"{ESC}OS");
+                    WriteConcat(ESC, "OS");
                     break;
                 case VTKey.F5:
-                    Write($"{ESC}[15~");
+                    WriteConcat(ESC, "[15~");
                     break;
                 case VTKey.F6:
-                    Write($"{ESC}[17~");
+                    WriteConcat(ESC, "[17~");
                     break;
                 case VTKey.F7:
-                    Write($"{ESC}[18~");
+                    WriteConcat(ESC, "[18~");
                     break;
                 case VTKey.F8:
-                    Write($"{ESC}[19~");
+                    WriteConcat(ESC, "[19~");
                     break;
                 case VTKey.F9:
-                    Write($"{ESC}[20~");
+                    WriteConcat(ESC, "[20~");
                     break;
                 case VTKey.F10:
-                    Write($"{ESC}[21~");
+                    WriteConcat(ESC, "[21~");
                     break;
                 case VTKey.F11:
-                    Write($"{ESC}[23~");
+                    WriteConcat(ESC, "[23~");
                     break;
                 case VTKey.F12:
-                    Write($"{ESC}[24~");
+                    WriteConcat(ESC, "[24~");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(key), key, null);

@@ -18,7 +18,7 @@ namespace TrueColorConsole
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}@");
+            WriteConcat(ESC, "[", count, "@");
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace TrueColorConsole
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}P");
+            WriteConcat(ESC, "[", count, "P");
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace TrueColorConsole
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}X");
+            WriteConcat(ESC, "[", count, "X");
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace TrueColorConsole
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}L");
+            WriteConcat(ESC, "[", count, "L");
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace TrueColorConsole
             if (count < 1)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
-            Write($"{ESC}[{count}M");
+            WriteConcat(ESC, "[", count, "M");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void EraseInDisplay(VTEraseMode eraseMode = VTEraseMode.FromCursorToEnd)
         {
-            Write($"{ESC}[{(int) eraseMode}J");
+            WriteConcat(ESC, "[", (int) eraseMode, "J");
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void EraseInLine(VTEraseMode eraseMode = VTEraseMode.FromCursorToEnd)
         {
-            Write($"{ESC}[{(int) eraseMode}K");
+            WriteConcat(ESC, "[", (int) eraseMode, "K");
         }
     }
 }

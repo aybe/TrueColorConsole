@@ -17,7 +17,7 @@ namespace TrueColorConsole
             if (lines < 1)
                 throw new ArgumentOutOfRangeException(nameof(lines));
 
-            Write($"{ESC}[{lines}S");
+            WriteConcat(ESC, "[", lines, "S");
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace TrueColorConsole
             if (lines < 1)
                 throw new ArgumentOutOfRangeException(nameof(lines));
 
-            Write($"{ESC}[{lines}T");
+            WriteConcat(ESC, "[", lines, "T");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace TrueColorConsole
             if (column < 1 || column > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(column));
 
-            Write($"{ESC}[{column}G");
+            WriteConcat(ESC, "[", column, "G");
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace TrueColorConsole
             if (row < 1 || row > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(row));
 
-            Write($"{ESC}[{row}d");
+            WriteConcat(ESC, "[", row, "d");
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorAnsiRestore()
         {
-            Write($"{ESC}[u");
+            WriteConcat(ESC, "[u");
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorAnsiSave()
         {
-            Write($"{ESC}[s");
+            WriteConcat(ESC, "[s");
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace TrueColorConsole
             if (line < 1 || line > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(line));
 
-            Write($"{ESC}[{line}E");
+            WriteConcat(ESC, "[", line, "E");
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace TrueColorConsole
             if (line < 1 || line > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(line));
 
-            Write($"{ESC}[{line}F");
+            WriteConcat(ESC, "[", line, "F");
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace TrueColorConsole
             if (rows < 1 || rows > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(rows));
 
-            Write($"{ESC}[{rows}A");
+            WriteConcat(ESC, "[", rows, "A");
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace TrueColorConsole
             if (rows < 1 || rows > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(rows));
 
-            Write($"{ESC}[{rows}B");
+            WriteConcat(ESC, "[", rows, "B");
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace TrueColorConsole
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}C");
+            WriteConcat(ESC, "[", columns, "C");
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace TrueColorConsole
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}D");
+            WriteConcat(ESC, "[", columns, "D");
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace TrueColorConsole
             if (row < 1 || row > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(row));
 
-            Write($"{ESC}[{column};{row}H");
+            WriteConcat(ESC, "[", column, ";", row, "H");
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorPositionRestore()
         {
-            Write($"{ESC}8");
+            WriteConcat(ESC, 8);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorPositionSave()
         {
-            Write($"{ESC}7");
+            WriteConcat(ESC, 7);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorReverseIndex()
         {
-            Write($"{ESC}M");
+            WriteConcat(ESC, "M");
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorSetBlinking(bool enabled)
         {
-            Write($"{ESC}[?12{(enabled ? "h" : "l")}");
+            WriteConcat(ESC, "[?12", enabled ? "h" : "l");
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void CursorSetVisibility(bool enabled)
         {
-            Write($"{ESC}[?25{(enabled ? "h" : "l")}");
+            WriteConcat(ESC, "[?25", enabled ? "h" : "l");
         }
     }
 }

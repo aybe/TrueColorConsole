@@ -11,7 +11,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void TabHorizontalSet()
         {
-            Write($"{ESC}H");
+            WriteConcat(ESC, "H");
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace TrueColorConsole
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}l");
+            WriteConcat(ESC, "[", columns, "l");
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace TrueColorConsole
             if (columns < 1 || columns > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(columns));
 
-            Write($"{ESC}[{columns}Z");
+            WriteConcat(ESC, "[", columns, "Z");
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void TabClear()
         {
-            Write($"{ESC}[0g");
+            WriteConcat(ESC, "[0g");
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void TabClearAll()
         {
-            Write($"{ESC}[3g");
+            WriteConcat(ESC, "[3g");
         }
     }
 }

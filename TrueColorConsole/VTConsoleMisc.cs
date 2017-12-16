@@ -17,10 +17,10 @@ namespace TrueColorConsole
             switch (charSet)
             {
                 case VTCharSet.Ascii:
-                    Write($"{ESC}(B");
+                    WriteConcat(ESC, "(B");
                     break;
                 case VTCharSet.DecLineDrawing:
-                    Write($"{ESC}(0");
+                    WriteConcat(ESC, "(0");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(charSet), charSet, null);
@@ -45,7 +45,7 @@ namespace TrueColorConsole
             if (bottom < 1 || bottom > short.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(bottom));
 
-            Write($"{ESC}[{top};{bottom}r");
+            WriteConcat(ESC, "[", top, ";", bottom, "r");
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace TrueColorConsole
             if (text.Length > 255)
                 throw new ArgumentOutOfRangeException(nameof(text));
 
-            Write($"{ESC}]2;{text}{BEL}");
+            WriteConcat(ESC.Length, "]2;", text, BEL);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace TrueColorConsole
             if (text.Length > 255)
                 throw new ArgumentOutOfRangeException(nameof(text));
 
-            Write($"{ESC}]0;{text}{BEL}");
+            WriteConcat(ESC.Length, "]0;", text, BEL);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SwitchScreenBufferAlternate()
         {
-            Write($"{ESC}[?1049h");
+            WriteConcat(ESC, "[?1049h");
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SwitchScreenBufferMain()
         {
-            Write($"{ESC}[?1049l");
+            WriteConcat(ESC, "[?1049l");
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SetConsoleWidth80()
         {
-            Write($"{ESC}[?3l");
+            WriteConcat(ESC, "[?3l");
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SetConsoleWidth132()
         {
-            Write($"{ESC}[?3h");
+            WriteConcat(ESC, "[?3h");
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace TrueColorConsole
         [PublicAPI]
         public static void SoftReset()
         {
-            Write($"{ESC}[!p");
+            WriteConcat(ESC, "[!p");
         }
     }
 }
