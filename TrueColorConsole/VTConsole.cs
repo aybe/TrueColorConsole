@@ -6,6 +6,10 @@ using JetBrains.Annotations;
 
 namespace TrueColorConsole
 {
+    /// <summary>
+    ///     Represents a wrapper of virtual terminal sequences for <see cref="Console" />, see
+    ///     https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences for more details.
+    /// </summary>
     public static partial class VTConsole
     {
         #region Interop
@@ -100,9 +104,15 @@ namespace TrueColorConsole
         [PublicAPI]
         public static bool IsSupported { get; } = Enable() && Disable();
 
+        /// <summary>
+        ///     Gets the handle to the console standard input.
+        /// </summary>
         [PublicAPI]
         public static IntPtr StdIn => _inHandle;
 
+        /// <summary>
+        ///     Gets the handle to the console standard output.
+        /// </summary>
         [PublicAPI]
         public static IntPtr StdOut => _outHandle;
 
@@ -208,18 +218,37 @@ namespace TrueColorConsole
             return string.Concat(ESC, "[38;2;", BytesMap[r], ";", BytesMap[g], ";", BytesMap[b], "m");
         }
 
+        /// <summary>
+        ///     Sets the background color for subsequent write calls.
+        /// </summary>
+        /// <param name="color">
+        ///     Character background color.
+        /// </param>
         [PublicAPI]
         public static void SetColorBackground(Color color)
         {
             Console.Write(GetColorBackgroundString(color.R, color.G, color.B));
         }
 
+        /// <summary>
+        ///     Sets the foreground color for subsequent write calls.
+        /// </summary>
+        /// <param name="color">
+        ///     Character foreground color, i.e. text color.
+        /// </param>
         [PublicAPI]
         public static void SetColorForeground(Color color)
         {
             Console.Write(GetColorForegroundString(color.R, color.G, color.B));
         }
 
+        /// <summary>
+        ///     Sets the formatting options for subsequent write calls.
+        /// </summary>
+        /// <param name="formats">
+        ///     An array of formatting options to apply, 16 at most. Competing options will result in the last-most option taking
+        ///     precedence.
+        /// </param>
         [PublicAPI]
         public static void SetFormat(params VTFormat[] formats)
         {
@@ -243,18 +272,36 @@ namespace TrueColorConsole
             return written;
         }
 
+        /// <summary>
+        ///     Writes the current line terminator to the standard output.
+        /// </summary>
         [PublicAPI]
         public static void WriteLine()
         {
             Console.WriteLine();
         }
 
+        /// <summary>
+        ///     Write the specified string value, followed by the current line terminator to the standard output.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write.
+        /// </param>
         [PublicAPI]
         public static void WriteLine(string value)
         {
             Console.WriteLine(value);
         }
 
+        /// <summary>
+        ///     Write the specified string value, followed by the current line terminator to the standard output.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write.
+        /// </param>
+        /// <param name="foreground">
+        ///     The color for the text.
+        /// </param>
         [PublicAPI]
         public static void WriteLine(string value, Color foreground)
         {
@@ -262,6 +309,18 @@ namespace TrueColorConsole
             WriteLine(value);
         }
 
+        /// <summary>
+        ///     Write the specified string value, followed by the current line terminator to the standard output.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write.
+        /// </param>
+        /// <param name="foreground">
+        ///     The color for the text.
+        /// </param>
+        /// <param name="background">
+        ///     The color for the background.
+        /// </param>
         [PublicAPI]
         public static void WriteLine(string value, Color foreground, Color background)
         {
@@ -270,12 +329,27 @@ namespace TrueColorConsole
             WriteLine(value);
         }
 
+        /// <summary>
+        ///     Write the specified string value to the standard output.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write.
+        /// </param>
         [PublicAPI]
         public static void Write(string value)
         {
             Console.Write(value);
         }
 
+        /// <summary>
+        ///     Write the specified string value to the standard output.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write.
+        /// </param>
+        /// <param name="foreground">
+        ///     The color for the text.
+        /// </param>
         [PublicAPI]
         public static void Write(string value, Color foreground)
         {
@@ -283,6 +357,18 @@ namespace TrueColorConsole
             Console.Write(value);
         }
 
+        /// <summary>
+        ///     Write the specified string value to the standard output.
+        /// </summary>
+        /// <param name="value">
+        ///     The value to write.
+        /// </param>
+        /// <param name="foreground">
+        ///     The color for the text.
+        /// </param>
+        /// <param name="background">
+        ///     The color for the background.
+        /// </param>
         [PublicAPI]
         public static void Write(string value, Color foreground, Color background)
         {
@@ -291,6 +377,12 @@ namespace TrueColorConsole
             Console.Write(value);
         }
 
+        /// <summary>
+        ///     Write the concatenation of specified objects to the standard output.
+        /// </summary>
+        /// <param name="objects">
+        ///     An object array that contains the elements to concatenate.
+        /// </param>
         [PublicAPI]
         public static void WriteConcat(params object[] objects)
         {
