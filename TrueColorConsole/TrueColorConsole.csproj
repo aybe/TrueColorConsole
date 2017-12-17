@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>TrueColorConsole</PackageId>
-    <PackageVersion>1.0.1</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <Authors>Aybe</Authors>
-    <Description>24-bit color console for .NET !</Description>
-    <PackageReleaseNotes>Full documentation, more formatting features, support of non Win10 Anniversary Update systems, optimization and fixes.</PackageReleaseNotes>
+    <Description>24-bit coloring and VT features for .NET System.Console !</Description>
+    <PackageReleaseNotes>Better README and description.</PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) Aybe</Copyright>
     <PackageTags>console virtual terminal 24-bit true color RGB .NET VT100</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
