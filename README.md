@@ -2,7 +2,7 @@
 
 24-bit coloring and VT features for .NET System.Console !
 
-[![NuGet](https://img.shields.io/badge/nuget-v1.0.1-blue.svg)](https://www.nuget.org/packages/TrueColorConsole/)
+[![NuGet](https://img.shields.io/badge/nuget-v1.0.2-blue.svg)](https://www.nuget.org/packages/TrueColorConsole/)
 
 ## Synopsis
 
