@@ -14,20 +14,37 @@ namespace TrueColorConsole
     {
         #region Interop
 
-        private const uint StdOutputHandle = unchecked((uint) -11);
-        private const uint StdInputHandle = unchecked((uint) -10);
-        private static readonly IntPtr InvalidHandleValue = new IntPtr(-1);
+        private static class NativeMethods
+        {
+            public const uint StdOutputHandle = unchecked((uint) -11);
+            public const uint StdInputHandle = unchecked((uint) -10);
+            public static readonly IntPtr InvalidHandleValue = new IntPtr(-1);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr GetStdHandle(uint nStdHandle);
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern IntPtr GetStdHandle(uint nStdHandle);
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+            [DllImport("kernel32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool WriteConsole(
+                IntPtr hConsoleOutput,
+                [MarshalAs(UnmanagedType.LPArray)] byte[] lpBuffer,
+                int lpNumberOfCharsToWrite,
+                out int lpNumberOfCharsToWritten,
+                IntPtr lpReserved
+            );
+        }
 
         private static bool GetConsoleMode(IntPtr hConsoleHandle, out ConsoleModeOutput mode)
         {
-            if (!GetConsoleMode(hConsoleHandle, out uint lpMode))
+            if (!NativeMethods.GetConsoleMode(hConsoleHandle, out uint lpMode))
             {
                 mode = 0;
                 return false;
@@ -39,7 +56,7 @@ namespace TrueColorConsole
 
         private static bool GetConsoleMode(IntPtr hConsoleHandle, out ConsoleModeInput mode)
         {
-            if (!GetConsoleMode(hConsoleHandle, out uint lpMode))
+            if (!NativeMethods.GetConsoleMode(hConsoleHandle, out uint lpMode))
             {
                 mode = 0;
                 return false;
@@ -49,30 +66,16 @@ namespace TrueColorConsole
             return true;
         }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool WriteConsole(
-            IntPtr hConsoleOutput,
-            [MarshalAs(UnmanagedType.LPArray)] byte[] lpBuffer,
-            int lpNumberOfCharsToWrite,
-            out int lpNumberOfCharsToWritten,
-            IntPtr lpReserved
-        );
-
         private static bool GetStdIn(out IntPtr handle)
         {
-            handle = GetStdHandle(StdInputHandle);
-            return handle != InvalidHandleValue;
+            handle = NativeMethods.GetStdHandle(NativeMethods.StdInputHandle);
+            return handle != NativeMethods.InvalidHandleValue;
         }
 
         private static bool GetStdOut(out IntPtr handle)
         {
-            handle = GetStdHandle(StdOutputHandle);
-            return handle != InvalidHandleValue;
+            handle = NativeMethods.GetStdHandle(NativeMethods.StdOutputHandle);
+            return handle != NativeMethods.InvalidHandleValue;
         }
 
         #endregion
@@ -91,12 +94,24 @@ namespace TrueColorConsole
         private static ConsoleModeInput _inLast;
         private static IntPtr _outHandle;
         private static ConsoleModeOutput _outLast;
+        private static bool _isEnabled;
+
+        private static readonly bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
         /// <summary>
         ///     Gets if virtual terminal features are enabled.
         /// </summary>
         [PublicAPI]
-        public static bool IsEnabled { get; private set; }
+        public static bool IsEnabled
+        {
+            get
+            {
+                if (IsWindows)
+                    return _isEnabled;
+                return true;
+            }
+            private set => _isEnabled = value;
+        }
 
         /// <summary>
         ///     Gets if virtual terminal features are supported (see Remarks).
@@ -147,7 +162,7 @@ namespace TrueColorConsole
 
                 var mode = _inLast | ConsoleModeInput.EnableVirtualTerminalInput;
 
-                return SetConsoleMode(StdIn, (uint) mode);
+                return NativeMethods.SetConsoleMode(StdIn, (uint) mode);
             }
 
             bool EnableOutput()
@@ -163,12 +178,12 @@ namespace TrueColorConsole
                 if (disableNewLineAutoReturn)
                     mode |= ConsoleModeOutput.DisableNewlineAutoReturn;
 
-                if (SetConsoleMode(StdOut, (uint) mode))
+                if (NativeMethods.SetConsoleMode(StdOut, (uint) mode))
                     return true;
 
                 mode = _outLast | ConsoleModeOutput.EnableVirtualTerminalProcessing;
 
-                return SetConsoleMode(StdOut, (uint) mode);
+                return NativeMethods.SetConsoleMode(StdOut, (uint) mode);
             }
 
             IsEnabled = EnableInput() && EnableOutput();
@@ -185,17 +200,19 @@ namespace TrueColorConsole
         [PublicAPI]
         public static bool Disable()
         {
+            if (!IsWindows)
+                return true;
             if (!IsEnabled)
                 return false;
 
             bool DisableInput()
             {
-                return GetStdIn(out var handle) && SetConsoleMode(handle, (uint) _inLast);
+                return GetStdIn(out var handle) && NativeMethods.SetConsoleMode(handle, (uint) _inLast);
             }
 
             bool DisableOutput()
             {
-                return GetStdOut(out var handle) && SetConsoleMode(handle, (uint) _outLast);
+                return GetStdOut(out var handle) && NativeMethods.SetConsoleMode(handle, (uint) _outLast);
             }
 
             IsEnabled = !(DisableInput() && DisableOutput());
@@ -284,7 +301,12 @@ namespace TrueColorConsole
         [PublicAPI]
         public static int WriteFast(byte[] buffer)
         {
-            WriteConsole(StdOut, buffer, buffer.Length, out var written, IntPtr.Zero);
+            if (!IsWindows)
+            {
+                Console.Write(Console.OutputEncoding.GetString(buffer));
+                return buffer.Length;
+            }
+            NativeMethods.WriteConsole(StdOut, buffer, buffer.Length, out var written, IntPtr.Zero);
             return written;
         }
 

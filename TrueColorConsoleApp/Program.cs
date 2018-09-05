@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using TrueColorConsole;
@@ -75,23 +76,31 @@ namespace TrueColorConsoleApp
         private static void Example3()
         {
             var plasma = new Plasma(256, 256);
-            var width = 80;
-            var height = 40;
-
-            Console.SetWindowSize(width, height);
-            Console.SetBufferSize(width, height);
-            Console.SetWindowSize(width, height); // removes bars
             Console.Title = "Plasma !";
             Console.CursorVisible = false;
 
+            var width = Console.WindowWidth;
+            var height = Console.WindowHeight;
             var builder = new StringBuilder(width * height * 22);
+            var resetEvent = new AutoResetEvent(true);
 
+            using(new Timer(x =>{resetEvent.Set();}, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(1.0/20*1000)))
             for (var frame = 0; ; frame++)
             {
+                if (width != Console.WindowWidth || height != Console.WindowHeight)
+                {
+                    width = Console.WindowWidth;
+                    height = Console.WindowHeight;
+                    Console.WriteLine();
+                    builder = new StringBuilder(width * height * 22);
+                }
+                else
+                {
+                    builder.Clear();
+                }
                 plasma.PlasmaFrame(frame);
-                builder.Clear();
                 
-                Thread.Sleep((int)(1.0 / 20 * 1000));
+                resetEvent.WaitOne();
                 
                 for (var i = 0; i < width * height; i++)
                 {
