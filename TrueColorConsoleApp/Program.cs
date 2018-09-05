@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using TrueColorConsole;
@@ -78,9 +79,12 @@ namespace TrueColorConsoleApp
             var width = 80;
             var height = 40;
 
-            Console.SetWindowSize(width, height);
-            Console.SetBufferSize(width, height);
-            Console.SetWindowSize(width, height); // removes bars
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.SetWindowSize(width, height);
+                Console.SetBufferSize(width, height);
+                Console.SetWindowSize(width, height); // removes bars
+            }
             Console.Title = "Plasma !";
             Console.CursorVisible = false;
 
