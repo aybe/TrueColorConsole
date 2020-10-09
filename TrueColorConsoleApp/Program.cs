@@ -2,8 +2,10 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using TrueColorConsole;
+using TrueColorConsole.Styled;
 
 namespace TrueColorConsoleApp
 {
@@ -11,16 +13,24 @@ namespace TrueColorConsoleApp
     {
         private static void Main(string[] args)
         {
-            if (!VTConsole.IsSupported)
-                throw new NotSupportedException();
+			if (!VTConsole.IsSupported)
+				throw new NotSupportedException();
 
-            VTConsole.Enable();
+			VTConsole.Enable();
 
-            Example3();
+			Example4();
 
             Console.ReadKey();
         }
+        private static void Example4() {
+            var st = new StyleSheet(Color.Orange);
+            st.AddStyle(new FormatRule(new Regex("hope.+SWEET"), new []{VTFormat.Underline }, new [] {VTFormat.NoUnderline }));
+            st.AddStyle(new StyleRule(new Regex("are .+"), Color.Transparent, null, Color.Red));
+            st.AddStyle(new StyleRule(new Regex(@"Happy.+going"),Color.Lime,(s)=>"Zanay how BOW how howdy"));
+            st.AddStyle(new StyleRule(new Regex("how"), Color.Blue));
+            VTConsole.WriteLineStyled("I hope you are Happy with how its going???? yah **SWEET**",st);
 
+		}
         private static int Example1()
         {
             var width = 80;

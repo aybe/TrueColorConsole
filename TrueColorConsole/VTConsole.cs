@@ -261,6 +261,8 @@ namespace TrueColorConsole
         public static void SetColorBackground(Color color)
         {
             Console.Write(GetColorBackgroundString(color.R, color.G, color.B));
+            if (track_color_history)
+                background_color_history.Push(color);
         }
 
         /// <summary>
@@ -273,6 +275,8 @@ namespace TrueColorConsole
         public static void SetColorForeground(Color color)
         {
             Console.Write(GetColorForegroundString(color.R, color.G, color.B));
+            if (track_color_history)
+                foreground_color_history.Push(color);
         }
 
         /// <summary>
