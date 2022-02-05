@@ -28,7 +28,7 @@ namespace TrueColorConsole.Styled {
 				foreach (var entire_match in matches.Cast<Match>().OrderByDescending(a => a.Index)) {//need to work back to front, do we?
 					if (!entire_match.Success)
 						continue;
-					var match = string.IsNullOrWhiteSpace(only_use_capture_group_name) ? entire_match.Groups[only_use_capture_group_name] : entire_match;
+					var match = ! string.IsNullOrWhiteSpace(only_use_capture_group_name) ? entire_match.Groups[only_use_capture_group_name] : entire_match;
 					var pos = match.Index;
 					//So we want to allow other items affecting the segment( ie uderline bg color etc) to conintue through that we don't set
 					var before_segment = new SegmentItem { str = cur_item.str.Substring(0, pos), before = cur_item.before };
