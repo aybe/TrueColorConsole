@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -405,6 +405,61 @@ namespace TrueColorConsole
             Console.Write(string.Concat(objects));
         }
 
-        #endregion
-    }
+
+		/// <summary>
+		///     Writes a file hyperlink to the console (if it supports OSC 8 sequences)
+		/// </summary>
+		/// <param name="title">
+		///     Title to show for the link
+		/// </param>
+		/// <param name="link">
+		///     The link, normally https:// http:// file://
+		/// </param>
+		[PublicAPI]
+		public static void WriteFileLink(String title, String file_path) {
+			Console.Write(GetFileLinkStr(title, file_path));
+		}
+		/// <summary>
+		///     Writes a hyperlink to the console (if it supports OSC 8 sequences)
+		/// </summary>
+		/// <param name="title">
+		///     Title to show for the link
+		/// </param>
+		/// <param name="link">
+		///     The link, normally https:// http:// file://
+		/// </param>
+		[PublicAPI]
+		public static void WriteLink(String title, String link) {
+			Console.Write(GetLinkStr(title,link));
+		}
+		/// <summary>
+		///     Get a hyperlink string sequence in OSC 8 format
+		/// </summary>
+		/// <param name="title">
+		///     Title to show for the link
+		/// </param>
+		/// <param name="file_path">
+		///     Path to the file
+		/// </param>
+		[PublicAPI]
+		public static string GetFileLinkStr(String title, String file_path) {
+			return $"{LINK}{new Uri(new Uri("file://"), file_path).AbsoluteUri}{ST}{title}{LINK}{ST}";//this file:// hinting is required for linux
+		}
+		/// <summary>
+		///     Get a hyperlink string sequence in OSC 8 format
+		/// </summary>
+		/// <param name="title">
+		///     Title to show for the link
+		/// </param>
+		/// <param name="link">
+		///     The link, normally https:// http:// file://
+		/// </param>
+		[PublicAPI]
+		public static string GetLinkStr(String title, String link) {
+			return $"{LINK}{link}{ST}{title}{LINK}{ST}";
+		}
+		private const string LINK = ESC + "]8;;";
+		private const string ST = ESC + "\\";
+		#endregion
+	}
 }
